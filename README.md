@@ -1,4 +1,6 @@
-# SMS Number of messages counter + transliteration
+# SMS Number of messages counter + transliteration (cyrillic <-> latin)
+## DEMO (w/o saving to db)
+https://inspiring-khorana-99886f.netlify.app/
 
 ## Project setup
 ```
