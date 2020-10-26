@@ -24,7 +24,7 @@ import { mapState } from 'vuex';
 export default {
   name: 'App',
   computed: {
-    ...mapState(['snackbar']),
-  },
+    ...mapState(['snackbar'])
+  }
 };
 </script>

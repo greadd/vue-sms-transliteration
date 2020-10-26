@@ -13,7 +13,7 @@
                 solo
                 class="rounded-lg"
                 auto-grow
-                label="Введите сообщение"
+                label="Enter your message..."
                 type="text"
                 :counter="0"
               ></v-textarea>
@@ -21,18 +21,18 @@
           </v-card-text>
           <v-card-actions class="d-flex flex-column">
             <v-checkbox
-              label="Транслитерировать"
+              label="Transliterate"
               v-model="checkbox"
               color="success"
-              @change="transliterate"
+              @change="transliterateMessage"
             ></v-checkbox>
-            <p>Количество сообщений: {{ numOfMessages }}</p>
+            <p>Number of messages: {{ numberOfMessages }}</p>
             <v-btn
               color="success"
               width="250"
               class="rounded-lg mr-2 mb-2"
               @click="saveMessage"
-              >Сохранить</v-btn
+              >Save</v-btn
             >
           </v-card-actions>
         </v-card>
@@ -47,48 +47,47 @@ export default {
   name: 'Home',
   data: () => ({
     message: '',
-    checkbox: false,
+    checkbox: false
   }),
   computed: {
-    numOfMessages: function() {
-      const message = this.message;
-      if (message.length) {
-        let numOfMessages = 1;
+    numberOfMessages: function () {
+      const msg = this.message;
+      if (msg.length) {
+        let numberOfMessages = 1;
         let maxMessageLength = 160;
-        if (/[а-яА-Я]/g.test(message)) {
+        if (/[а-яА-Я]/g.test(msg)) {
           maxMessageLength = 70;
-          if (message.length > maxMessageLength) {
+          if (msg.length > maxMessageLength) {
             maxMessageLength = 67;
-            numOfMessages = Math.ceil(message.length / maxMessageLength);
+            numberOfMessages = Math.ceil(msg.length / maxMessageLength);
           }
-        } else if (message.length > maxMessageLength) {
+        } else if (msg.length > maxMessageLength) {
           maxMessageLength - 153;
-          numOfMessages = Math.ceil(message.length / maxMessageLength);
+          numberOfMessages = Math.ceil(msg.length / maxMessageLength);
         }
-        return numOfMessages;
+        return numberOfMessages;
       } else return 0;
-    },
+    }
   },
   methods: {
     async saveMessage() {
-      if (this.message) {
+      if (this.message.trim()) {
         try {
           await axios.post('http://localhost:3000/messages', {
             message: this.message,
-            numOfMessages: this.numOfMessages,
+            numberOfMessages: this.numberOfMessages
           });
           this.$store.dispatch('setSnackbar', {
-            //сообщение при сохранении
-            text: 'Сообщение сохранено!',
+            text: 'Saved!',
             color: 'success'
-          })
-          this.message= ''
+          });
+          this.message = '';
         } catch (error) {
           console.log(error);
         }
       }
     },
-    transliterate() {
+    transliterateMessage() {
       if (this.checkbox) {
         this.message = this.message
           .replace(/\u0401/g, 'Yo')
@@ -238,7 +237,7 @@ export default {
           .replace(/\u0075/g, 'ю')
           .replace(/\u0079/g, 'й')
           .replace(/\u0073/g, 'с');
-    },
-  },
+    }
+  }
 };
 </script>

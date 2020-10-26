@@ -1,7 +1,7 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from 'vue';
+import Vuex from 'vuex';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
@@ -9,14 +9,14 @@ export default new Vuex.Store({
   },
   mutations: {
     setSnackbar(state, snackbar) {
-      state.snackbar = snackbar
+      state.snackbar = snackbar;
     }
   },
   actions: {
-    setSnackbar({ commit }, snackbar) { //сообщение на странице приложения при отправке
-      snackbar.showing = true
-      commit('setSnackbar', snackbar)
+    setSnackbar({ commit }, snackbar) {
+      snackbar.showing = true;
+      commit('setSnackbar', snackbar);
     }
   },
   getters: {}
-})
+});
